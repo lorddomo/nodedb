@@ -1,35 +1,35 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/recipes');
+let db = mongoose.connection;
+
+db.once('open', function(){
+  console.log('Connected to MongoDB');
+});
+
+db.on('error', function(err){
+  console.log(err);
+});
 
 const app = express();
+
+let Recipe = require('./models/recipe');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.get('/', function(req, res){
-  let recipes = [
-    {
-      id:1,
-      title:'Recipe one',
-      author:'Dominik Choroś',
-      body:'This is recipe one'
-    },
-    {
-      id:2,
-      title:'Recipe two',
-      author:'Dominik Choroś',
-      body:'This is recipe two'
-    },
-    {
-      id:3,
-      title:'Recipe three',
-      author:'Dominik Choroś',
-      body:'This is recipe three'
+  Recipe.find({}, function(err, recipes){
+    if(err){
+      console.log(err);
+    } else{
+      res.render('index', {
+        title:'Recipes',
+        recipes: recipes
+      });
     }
-  ];
-  res.render('index', {
-    title:'Recipes',
-    recipes: recipes
   });
 });
 
