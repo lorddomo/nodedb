@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 mongoose.connect('mongodb://localhost/recipes');
 let db = mongoose.connection;
@@ -16,6 +17,11 @@ db.on('error', function(err){
 const app = express();
 
 let Recipe = require('./models/recipe');
+
+app.use(bodyParser.urlencoded({ extened: false}));
+app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -34,10 +40,25 @@ app.get('/', function(req, res){
 });
 
 app.get('/recipes/add', function(req, res){
-  res.render('add_recipe', {
-      title:'Add Recipe'
-    });
+  res.render('add_recipe',{
+    title:'Add Recipe'
+  });
 });
+
+app.post('/recipes/add', function(req, res){
+  let recipe = new Recipe();
+  recipe.title = req.body.title;
+  recipe.author = req.body.author;
+  recipe.body = req.body.body;
+
+  recipe.save(function(err){
+    if(err){
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+  });
 
 app.listen(3000, function(){
   console.log('Server started on port 3000');
