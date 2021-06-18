@@ -39,6 +39,23 @@ app.get('/', function(req, res){
   });
 });
 
+app.get('/recipe/:id', function(req, res) {
+  Recipe.findById(req.params.id, function(err, recipe){
+    res.render('recipe',{
+      recipe: recipe
+    });
+  });
+})
+
+app.get('/recipe/edit/:id', function(req, res) {
+  Recipe.findById(req.params.id, function(err, recipe){
+    res.render('edit_recipe',{
+      title:'Edit Recipe',
+      recipe: recipe
+    });
+  });
+})
+
 app.get('/recipes/add', function(req, res){
   res.render('add_recipe',{
     title:'Add Recipe'

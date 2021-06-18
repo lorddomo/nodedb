@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= recipe.title
+  h1= recipe.title
+  h5 Written by #{recipe.author}
+  p= recipe.body
+  hr
+  a.btn.btn-default(href='/recipe/edit/'+recipe._id) Edit

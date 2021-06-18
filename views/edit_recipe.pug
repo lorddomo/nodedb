@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 #{title}
+  form(method='post', action='/recipes/edit'+recipe._id)
+    #form-group
+      label Title:
+      input.form-control(name='title', type='text', value=recipe.title)
+    #form-group
+      label Author:
+      input.form-control(name='author', type='text')
+    #form-group
+      label Body:
+      textarea.form-control(name='body')
+    input.btn.btn-primary(type='submit', value='Submit')

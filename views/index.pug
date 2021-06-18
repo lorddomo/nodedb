@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1 #{title}
-  ul
+  ul.list-group
     each recipe, i in recipes
-      li= recipe.title
+      li.list-group-item
+        a(href="/recipe/"+recipe._id)= recipe.title

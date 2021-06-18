@@ -2,9 +2,26 @@ doctype html
 html
   head
     title Recipes app
+    link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
   body
-    block content
-    br
-    hr
-    footer
-      p Copyright &copy; 2021
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+      a.navbar-brand(href='#') Recipes app
+      button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarsExampleDefault' aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarsExampleDefault.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href='/')
+              | Home 
+          li.nav-item
+            a.nav-link(href='/recipes/add/') Add recipe
+          li.nav-item
+            a.nav-link.disabled(href='#') Disabled
+    .container
+      block content
+      br
+      hr
+      footer
+        p Copyright &copy; 2021
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
